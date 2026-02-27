@@ -73,6 +73,8 @@ spec:
           # this task is intended to be used for quay.io
           REGISTRY=$(params.quayRegistryUrl)
 
+          echo "${HOME}/.docker/config.json"
+
           SOURCE_AUTH_FILE=$(mktemp)
           SOURCE_REPO=${2%%@sha256:*}
           select-oci-auth "$2" | jq -c \
@@ -83,6 +85,8 @@ spec:
           # we can create a combined auth file with source and destination entries for `cosign copy` later
           select-oci-auth "$3" | jq -c \
             '.auths."'"$3"'" = .auths."'"$REGISTRY"'" | del(.auths."'"$REGISTRY"'")' > "$DEST_AUTH_FILE"
+          select-oci-auth "$3"
+          cat "$DEST_AUTH_FILE"
 
           DESTINATION_DIGEST=$(oras resolve --registry-config "$DEST_AUTH_FILE" "$3:$4" || true)
           ORIGIN_DIGEST=$(oras resolve --registry-config "$SOURCE_AUTH_FILE" "$2")
