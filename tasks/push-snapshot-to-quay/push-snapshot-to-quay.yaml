@@ -73,7 +73,7 @@ spec:
           # this task is intended to be used for quay.io
           REGISTRY=$(params.quayRegistryUrl)
 
-          echo "${HOME}/.docker/config.json"
+          cat "${HOME}/.docker/config.json"
 
           SOURCE_AUTH_FILE=$(mktemp)
           SOURCE_REPO=${2%%@sha256:*}
