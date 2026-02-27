@@ -30,6 +30,10 @@ spec:
       description: If true, skip copying attestations and signatures
       type: string
       default: "false"
+    - name: quayRegistryUrl
+      description: The URL of the Quay registry to push the snapshot to
+      type: string
+      default: "quay.io"
   steps:
     - name: check-release-status
       image: quay.io/konflux-ci/release-service-utils:066a63d25546239e79533b99c83ff521a045c819
@@ -67,7 +71,7 @@ spec:
 
         push_image() { # Expected arguments are [name, containerImage, repository, tag]
           # this task is intended to be used for quay.io
-          REGISTRY=quay.io
+          REGISTRY=$(params.quayRegistryUrl)
 
           SOURCE_AUTH_FILE=$(mktemp)
           SOURCE_REPO=${2%%@sha256:*}

@@ -38,6 +38,9 @@ spec:
       description: If true, skip copying attestations and signatures
       type: string
       default: "false"
+    - name: quayRegistryUrl
+      description: The URL of the Quay registry to push the snapshot to
+      default: "quay.io"
   tasks:
     - name: push-snapshot-to-quay
       taskRef:
@@ -60,3 +63,5 @@ spec:
           value: $(params.requireSuccessfulManagedRelease)
         - name: skipAttestations
           value: $(params.skipAttestations)
+        - name: quayRegistryUrl
+          value: $(params.quayRegistryUrl)
