@@ -87,7 +87,6 @@ spec:
             '.auths."'"$3"'" = .auths."'"$REGISTRY"'" | del(.auths."'"$REGISTRY"'")' > "$DEST_AUTH_FILE"
           select-oci-auth "$3"
           cat "$DEST_AUTH_FILE"
-          sleep 300
 
           DESTINATION_DIGEST=$(oras resolve --registry-config "$DEST_AUTH_FILE" "$3:$4" || true)
           ORIGIN_DIGEST=$(oras resolve --registry-config "$SOURCE_AUTH_FILE" "$2")
